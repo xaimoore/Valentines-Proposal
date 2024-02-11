@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Proposal</title>
+</head>
+
+<body>
+  <picture>
+    <source media="(min-width: 768px)" srcset="images/valentines-day.webp" />
+    <img class="bg-image" src="images/valentines-day-sm.webp" alt="background image Valentines Day" />
+  </picture>
+  <div class="container">
+    <div class="wrapper">
+      <img class="image" src="images/cute.gif"></img>
+      <div class="text">
+        <h1 class="hh" id="name">Привіт, красуне!</h1>
+        <p class="pp" id="question">Ти будеш моєю Валентинкою? </p>
+      </div>
+      <div class="buttons">
+        <button class="button no" id="no-button">Ні</button>
+        <button class="button yes" onclick="showMessage()" id="yesButton">Так</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+  <script>
+    const button = document.getElementById('no-button');
+    const wrapper = document.querySelector('.wrapper');
+
+    const animateMove = (element, prop, pixels) =>
+      anime({
+        targets: element,
+        [prop]: `${pixels}px`,
+        easing: "easeOutCirc"
+      });
+
+    ["mouseover", "click"].forEach(function (el) {
+      button.addEventListener(el, function (event) {
+        const bottom = getRandomNumber(wrapper.offsetHeight - this.offsetHeight);
+        const left = getRandomNumber(wrapper.offsetWidth - this.offsetWidth);
+
+        document.getElementsByClassName("image")[0].src = "images/gun.gif";
+
+        animateMove(this, "left", left).play();
+        animateMove(this, "bottom", bottom).play();
+
+        document.getElementById("question").textContent =
+          "Альо, ти що там задумала?";
+        document.getElementById("name").style.display = "none";
+      });
+    });
+
+    const getRandomNumber = (num) => {
+      return Math.floor(Math.random() * (num + 1));
+    };
+
+    function showMessage(response) {
+      document.getElementById("name").remove();
+      document.getElementById("no-button").remove();
+
+      const yesMessage = document.getElementById("question");
+      yesMessage.textContent = "Ти моя бусінка 😘";
+      yesMessage.style.display = "block";
+      yesMessage.style.fontStyle = "normal";
+      document.getElementsByClassName("image")[0].src = "images/kiss.gif";
+
+      document.getElementById("yesButton").remove();
+
+    }
+  </script>
+</body>
+
+</html>
